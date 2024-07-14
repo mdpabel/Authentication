@@ -1,5 +1,3 @@
-import { User } from '@repo/schema';
+import { User } from '@packages/schema';
 
-const user: User = {
-  id: '1',
-};
+const user: User = {};
