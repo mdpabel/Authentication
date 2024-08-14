@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  udpatedAt DateTime @updatedAt
+
+  email            String         @unique
+  firstName        String
+  lastName         String
+  password         String
+  passwordChangeAt DateTime?
+  isEmailVerified  Boolean        @default(false)
+  provider         String         @default("email")
+  googleId         String?
+  avatar           String?
+  businessName     String?
+  phoneNumber      String?
+  address          String?
+  city             String?
+  country          String?
+  role             String?        @default("USER")
+  active           Boolean        @default(true)
+  refreshTokens    RefreshToken[]
+}
+
+// enum ROLE {
+//   ADMIN
+//   USER
+// }
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  udpatedAt DateTime @updatedAt
+
+  token     String   @unique
+  userId    Int
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+}

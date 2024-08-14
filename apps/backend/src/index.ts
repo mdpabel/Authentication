@@ -1,3 +1,8 @@
-import { User } from '@packages/schema';
+import env from '../env';
+import app from './server';
 
-const user: User = {};
+const port = env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
